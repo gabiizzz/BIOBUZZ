@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
 import android.graphics.Color;
+
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
@@ -11,6 +13,7 @@ import org.firstinspires.ftc.robotcore.external.JavaUtil;
 
 //sensor test
 @TeleOp
+@Disabled
 public class sensor extends OpMode{
     NormalizedColorSensor sensor;
     double hue;
