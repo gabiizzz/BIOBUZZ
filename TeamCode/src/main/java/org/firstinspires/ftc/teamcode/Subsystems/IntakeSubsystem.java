@@ -7,7 +7,7 @@ import com.seattlesolvers.solverslib.hardware.servos.ServoEx;
 
 public class IntakeSubsystem extends SubsystemBase{
 
-    Motor mIntake;
+    Motor mIntake, mIntake2;
     ServoEx flower, intakeLeft, intakeRight;
 
     public IntakeSubsystem(HardwareMap hardwareMap){
@@ -15,6 +15,9 @@ public class IntakeSubsystem extends SubsystemBase{
 
         mIntake= hardwareMap.get(Motor.class, "INTAKE" /*,rpm*/);
         mIntake.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+
+        mIntake2= hardwareMap.get(Motor.class, "INTAKE2" /*,rpm*/);
+        mIntake2.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
 
         flower= hardwareMap.get(ServoEx.class, "FLOWER");
         intakeLeft= hardwareMap.get(ServoEx.class, "INTLEFT");
@@ -25,6 +28,7 @@ public class IntakeSubsystem extends SubsystemBase{
 
     public void setPower(double power){
         mIntake.set(power);
+        //mIntake2.set(power);
     }
 
     public void setPosForFlower(double pos){
