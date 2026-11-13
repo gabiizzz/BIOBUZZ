@@ -15,27 +15,8 @@ public class StopperSubsystem extends SubsystemBase{
         stpNectar= hardwareMap.get(ServoEx.class, "STOPPERNECTAR");
     }
 
-    //--------------------------------------------POLEN---------------------------------------------
-    public void stopPolen(){
-        //variabila pt stop
-        stpPolen.set(0);
+    public void setStopperPos(double pos){
+        stpPolen.set(pos);
+        stpNectar.set(pos);
     }
-
-    public void allowPolen(){
-        //variabila pt allow
-        stpPolen.set(0);
-    }
-
-    //--------------------------------------------NECTAR--------------------------------------------
-    public void stopNectar(){
-        //variabila pt stop
-        stpNectar.set(0);
-    }
-
-    public void allowNectar(){
-        //variabila pt allow
-        stpNectar.set(0);
-    }
-
-    ///sau efectiv punem valorile variabilelor in teleop si : 'stoppers.stopper_ales.set(pos)' as they re public objects
 }
