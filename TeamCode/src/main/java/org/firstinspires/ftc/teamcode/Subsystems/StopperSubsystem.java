@@ -11,12 +11,24 @@ public class StopperSubsystem extends SubsystemBase{
     public StopperSubsystem(HardwareMap hardwareMap){
         super();
 
-        stpPolen= hardwareMap.get(ServoEx.class, "STOPPERPOLEN");
-        stpNectar= hardwareMap.get(ServoEx.class, "STOPPERNECTAR");
+        stpPolen= new ServoEx(hardwareMap, "STOPPERPOLEN");
+        stpNectar= new ServoEx(hardwareMap, "STOPPERNECTAR");
+
+        stpNectar.setInverted(true);
     }
 
-    public void setStopperPos(double pos){
-        stpPolen.set(pos);
-        stpNectar.set(pos);
+//    public void setStopperPos(double pos){
+//        stpPolen.set(pos);
+//        stpNectar.set(pos);
+//    }
+
+    public void STOP(){
+        stpPolen.set(Constante.polenSTOP);
+        stpNectar.set(Constante.nectarSTOP);
+    }
+
+    public void ALLOW(){
+        stpPolen.set(Constante.polenALLOW);
+        stpNectar.set(Constante.nectarALLOW);
     }
 }
