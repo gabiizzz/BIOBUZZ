@@ -13,10 +13,10 @@ public class IntakeSubsystem extends SubsystemBase{
     public IntakeSubsystem(HardwareMap hardwareMap){
         super();
 
-        mIntake= hardwareMap.get(Motor.class, "INTAKE" /*,rpm*/);
+        mIntake= new Motor(hardwareMap, "INTAKE");
         mIntake.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
 
-        mIntake2= hardwareMap.get(Motor.class, "INTAKE2" /*,rpm*/);
+        mIntake2= new Motor(hardwareMap, "INTAKE2");
         mIntake2.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
 
         flower= hardwareMap.get(ServoEx.class, "FLOWER");
@@ -28,7 +28,7 @@ public class IntakeSubsystem extends SubsystemBase{
 
     public void setPower(double power){
         mIntake.set(power);
-        //mIntake2.set(power);
+        mIntake2.set(power);
     }
 
     public void setPosForFlower(double pos){

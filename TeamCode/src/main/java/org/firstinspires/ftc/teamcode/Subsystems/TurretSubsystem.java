@@ -16,7 +16,7 @@ public class TurretSubsystem extends SubsystemBase{
         super();
 
         mPolen= hardwareMap.get(DcMotorEx.class, "FLYWHEELPOLEN");
-//        mNectar= hardwareMap.get(DcMotorEx.class, "FLYWHEELNECTAR");
+        mNectar= hardwareMap.get(DcMotorEx.class, "FLYWHEELNECTAR");
 
 //
 //        adjPolen= hardwareMap.get(ServoEx.class, "AJUSTAREPOLEN");
@@ -26,25 +26,17 @@ public class TurretSubsystem extends SubsystemBase{
     public void setPowerPolen(double pow){
         mPolen.setVelocity(pow);
     }
-
     public void startPolenMotor(){
         mPolen.setVelocity(2900);
     }
-
-//    public void setPowerNectar(double pow){
-//        mNectar.setVelocity(pow);
-//    }
-
-    //??
-    /*public void shootPolen(){
-        //valoare specifica shoot polen
-        mPolen.setVelocity(0);
+    public void startNectarMotor(){
+        mNectar.setVelocity(2900);
+    }
+    public void setPowerNectar(double pow){
+        mNectar.setVelocity(pow);
     }
 
-    public void shootNectar(){
-        //valoare specifica shoot nectar
-        mNectar.setVelocity(0);
-    }*/
+    //??
 //
 //    public void setPosAdjPolen(double pos){
 //        adjPolen.set(pos);

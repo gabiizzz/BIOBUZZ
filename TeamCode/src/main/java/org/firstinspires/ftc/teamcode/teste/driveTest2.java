@@ -19,7 +19,7 @@ public class driveTest2 extends CommandOpMode{
         gmp1= new GamepadEx(gamepad1);
         robotCentric= new RobotCentric(
                 driveSubsystem,
-                gmp1::getLeftX,
+                () -> -gmp1.getLeftX(),
                 gmp1::getLeftY,
                 gmp1::getRightX
         );

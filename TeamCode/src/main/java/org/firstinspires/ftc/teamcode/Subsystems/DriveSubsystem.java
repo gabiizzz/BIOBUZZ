@@ -16,12 +16,12 @@ public class DriveSubsystem extends SubsystemBase{
     public DriveSubsystem(HardwareMap hardwareMap){
         super();
 
-//        pinpoint= hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
-//        pinpoint.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.REVERSED, GoBildaPinpointDriver.EncoderDirection.FORWARD);
-//        pinpoint.setOffsets(0, 0, DistanceUnit.INCH);
-//
-//        pinpoint.resetPosAndIMU();
-//        pinpoint.recalibrateIMU();
+        pinpoint= hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
+        pinpoint.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.REVERSED, GoBildaPinpointDriver.EncoderDirection.FORWARD);
+        pinpoint.setOffsets(0, 0, DistanceUnit.INCH);
+
+        pinpoint.resetPosAndIMU();
+        pinpoint.recalibrateIMU();
 
         fl= new Motor(hardwareMap, "FL");
         fr= new Motor(hardwareMap, "FR");
@@ -39,10 +39,10 @@ public class DriveSubsystem extends SubsystemBase{
         this.mecanum= new MecanumDrive(false, fl, fr, bl, br);
     }
 
-//    public void resetPINPOIN(){
-//        pinpoint.resetPosAndIMU();
-//        pinpoint.recalibrateIMU();
-//    }
+    public void resetPINPOIN(){
+        pinpoint.resetPosAndIMU();
+        pinpoint.recalibrateIMU();
+    }
 
     //------------------------------------------drive-----------------------------------------------
     public void driveRobotCentric(double strafeS, double forwardS, double turnS){
