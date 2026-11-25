@@ -16,32 +16,33 @@ public class DriveSubsystem extends SubsystemBase{
     public DriveSubsystem(HardwareMap hardwareMap){
         super();
 
-        pinpoint= hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
-        pinpoint.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.REVERSED, GoBildaPinpointDriver.EncoderDirection.FORWARD);
-        pinpoint.setOffsets(0, 0, DistanceUnit.INCH);
+//        pinpoint= hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
+//        pinpoint.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.REVERSED, GoBildaPinpointDriver.EncoderDirection.FORWARD);
+//        pinpoint.setOffsets(0, 0, DistanceUnit.INCH);
+//
+//        pinpoint.resetPosAndIMU();
+//        pinpoint.recalibrateIMU();
 
-        pinpoint.resetPosAndIMU();
-        pinpoint.recalibrateIMU();
-
-        fl= hardwareMap.get(Motor.class, "FL" /*, rpm*/);
-        fr= hardwareMap.get(Motor.class, "FR" /*, rpm*/);
-        bl= hardwareMap.get(Motor.class, "BL" /*, rpm*/);
-        br= hardwareMap.get(Motor.class, "BR" /*, rpm*/);
+        fl= new Motor(hardwareMap, "FL");
+        fr= new Motor(hardwareMap, "FR");
+        bl= new Motor(hardwareMap, "BL");
+        br= new Motor(hardwareMap, "BR");
 
         fl.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         fr.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         bl.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         br.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
 
-        //inverted
+        fl.setInverted(true);
+        bl.setInverted(true);
 
         this.mecanum= new MecanumDrive(false, fl, fr, bl, br);
     }
 
-    public void resetPINPOIN(){
-        pinpoint.resetPosAndIMU();
-        pinpoint.recalibrateIMU();
-    }
+//    public void resetPINPOIN(){
+//        pinpoint.resetPosAndIMU();
+//        pinpoint.recalibrateIMU();
+//    }
 
     //------------------------------------------drive-----------------------------------------------
     public void driveRobotCentric(double strafeS, double forwardS, double turnS){

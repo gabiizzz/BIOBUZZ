@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.TeleOp;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.seattlesolvers.solverslib.command.CommandOpMode;
 import com.seattlesolvers.solverslib.command.InstantCommand;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
@@ -34,26 +36,26 @@ public class TeleOp extends CommandOpMode{
     @Override
     public void initialize(){
 
-//        driveSubsystem= new DriveSubsystem(hardwareMap);
+        driveSubsystem= new DriveSubsystem(hardwareMap);
         gmp1= new GamepadEx(gamepad1);
-//        robotCentric= new RobotCentric(
-//                driveSubsystem,
-//                gmp1::getLeftX,
-//                gmp1::getLeftY,
-//                gmp1::getRightX
-//        );
+        robotCentric= new RobotCentric(
+                driveSubsystem,
+                gmp1::getLeftX,
+                gmp1::getLeftY,
+                gmp1::getRightX
+        );
 //        /*fieldCentric= new FieldCentric(
 //                driveSubsystem,
 //                gmp1::getLeftX,
 //                gmp1::getLeftY,
 //                gmp1::getRightX
 //        );*/
-//        driveSubsystem.setDefaultCommand(robotCentric);
+        driveSubsystem.setDefaultCommand(robotCentric);
 //
 //        intake= new IntakeSubsystem(hardwareMap);
         stoppers= new StopperSubsystem(hardwareMap);
 //        limelightServo= new LimelightSubsystem(hardwareMap);
-//        turret= new TurretSubsystem(hardwareMap);
+        turret= new TurretSubsystem(hardwareMap);
 
         //-------------------------------------------controls---------------------------------------
         gmp1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
@@ -72,5 +74,9 @@ public class TeleOp extends CommandOpMode{
             start = true;
             schedule(new InstantCommand(() -> stoppers.STOP()));
         }
+
+        schedule(
+                new InstantCommand(()-> turret.startPolenMotor())
+        );
     }
 }
