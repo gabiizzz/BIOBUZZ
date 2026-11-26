@@ -40,7 +40,7 @@ public class TeleOp extends CommandOpMode{
         gmp1= new GamepadEx(gamepad1);
         robotCentric= new RobotCentric(
                 driveSubsystem,
-                gmp1::getLeftX,
+                () -> -gmp1.getLeftX(),
                 gmp1::getLeftY,
                 gmp1::getRightX
         );
@@ -52,15 +52,19 @@ public class TeleOp extends CommandOpMode{
 //        );*/
         driveSubsystem.setDefaultCommand(robotCentric);
 //
-//        intake= new IntakeSubsystem(hardwareMap);
+        intake= new IntakeSubsystem(hardwareMap);
         stoppers= new StopperSubsystem(hardwareMap);
 //        limelightServo= new LimelightSubsystem(hardwareMap);
         turret= new TurretSubsystem(hardwareMap);
 
         //-------------------------------------------controls---------------------------------------
-        gmp1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
+        gmp1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
                 .whenPressed(new InstantCommand(()-> stoppers.ALLOW()))
                 .whenReleased(new InstantCommand(()-> stoppers.STOP()));
+
+        gmp1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
+                .whenPressed(new InstantCommand(()-> intake.take()))
+                .whenReleased(new InstantCommand(()-> intake.stopIntake()));
 
         telemetry.addData("Status", "INITIALIZED");
         telemetry.update();

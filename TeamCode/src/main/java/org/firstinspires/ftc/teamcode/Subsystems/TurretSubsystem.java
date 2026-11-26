@@ -23,21 +23,18 @@ public class TurretSubsystem extends SubsystemBase{
 //        adjNectar= hardwareMap.get(ServoEx.class, "AJUSTARENECTAR");
     }
 
-    public void setPowerPolen(double pow){
-        mPolen.setVelocity(pow);
-    }
     public void startPolenMotor(){
         mPolen.setVelocity(2900);
     }
     public void startNectarMotor(){
-        mNectar.setVelocity(2900);
-    }
-    public void setPowerNectar(double pow){
-        mNectar.setVelocity(pow);
+        mNectar.setVelocity(3000);
     }
 
-    //??
-//
+    public void startMotors(){
+        startPolenMotor();
+        startNectarMotor();
+    }
+
 //    public void setPosAdjPolen(double pos){
 //        adjPolen.set(pos);
 //    }

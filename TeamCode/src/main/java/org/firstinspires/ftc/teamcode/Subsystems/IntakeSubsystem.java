@@ -7,33 +7,37 @@ import com.seattlesolvers.solverslib.hardware.servos.ServoEx;
 
 public class IntakeSubsystem extends SubsystemBase{
 
-    Motor mIntake, mIntake2;
-    ServoEx flower, intakeLeft, intakeRight;
+    public Motor mIntake, mIntake2;
+    public ServoEx flower, intakeLeft, intakeRight;
 
     public IntakeSubsystem(HardwareMap hardwareMap){
         super();
 
         mIntake= new Motor(hardwareMap, "INTAKE");
         mIntake.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+        mIntake.setInverted(true);
 
-        mIntake2= new Motor(hardwareMap, "INTAKE2");
+        mIntake2= new Motor(hardwareMap, "INTAKE2");//transfer
         mIntake2.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+        mIntake2.setInverted(true);
 
-        flower= hardwareMap.get(ServoEx.class, "FLOWER");
-        intakeLeft= hardwareMap.get(ServoEx.class, "INTLEFT");
-        intakeRight= hardwareMap.get(ServoEx.class, "INTRIGHT");
-
-        //inverted
+//        flower= hardwareMap.get(ServoEx.class, "FLOWER");
+        intakeLeft= new ServoEx(hardwareMap, "INTLEFT");
+        intakeRight= new ServoEx(hardwareMap, "INTRIGHT");
+        intakeRight.setInverted(true);
     }
 
-    public void setPower(double power){
-        mIntake.set(power);
-        mIntake2.set(power);
+    public void take(){
+        mIntake.set(1);
+        mIntake2.set(1);
     }
 
-    public void setPosForFlower(double pos){
-        flower.set(pos);
+    public void stopIntake(){
+        mIntake.set(0);
+        mIntake2.set(0);
     }
 
-    //functii pentru servo urile de la intake
+//    public void setPosForFlower(double pos){
+//        flower.set(pos);
+//    }
 }
