@@ -26,11 +26,11 @@ public class intakeTest extends OpMode{
         if(gamepad1.square) intake.mIntake2.set(1);
         else intake.mIntake2.set(0);
 
-        if(gamepad1.dpadUpWasReleased()) pos+=0.01;
-        if(gamepad1.dpadDownWasReleased()) pos-=0.01;
+        if(gamepad1.dpadUpWasReleased()) pos+=0.05;
+        if(gamepad1.dpadDownWasReleased()) pos-=0.05;
 
-        if(gamepad1.dpadRightWasReleased()) pos2+=0.01;
-        if(gamepad1.dpadLeftWasReleased()) pos2-=0.01;
+        if(gamepad1.dpadRightWasReleased()) pos2+=0.05;
+        if(gamepad1.dpadLeftWasReleased()) pos2-=0.05;
 
         intake.intakeLeft.set(pos);
         intake.intakeRight.set(pos2);
