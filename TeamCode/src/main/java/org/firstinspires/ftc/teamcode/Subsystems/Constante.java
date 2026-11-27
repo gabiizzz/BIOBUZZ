@@ -6,4 +6,7 @@ public class Constante{
                         ,polenALLOW= 0.42;
     public static double nectarSTOP= 0.29
                         ,nectarALLOW= 0.09;
+
+    public static double TAKE=0
+                        ,PUSH=0.25;
 }

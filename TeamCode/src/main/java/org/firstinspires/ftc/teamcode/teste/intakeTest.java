@@ -35,11 +35,6 @@ public class intakeTest extends OpMode{
         intake.intakeLeft.set(pos);
         intake.intakeRight.set(pos2);
 
-        //idle right=
-        //     left=
-        //take bile right=
-        //          left=
-
         telemetry.addData("pos", pos);
         telemetry.addData("pos2", pos2);
         telemetry.addData("Left servoPos", intake.intakeLeft.get());

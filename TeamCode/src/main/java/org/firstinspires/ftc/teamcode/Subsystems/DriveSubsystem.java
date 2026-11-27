@@ -52,4 +52,9 @@ public class DriveSubsystem extends SubsystemBase{
     public void driveFieldCentric(double strafeS, double forwardS, double turnS, double angles){
         mecanum.driveFieldCentric(strafeS, forwardS, turnS, angles, false);
     }
+
+    public void resetPinpoint(){
+        pinpoint.resetPosAndIMU();
+        pinpoint.recalibrateIMU();
+    }
 }

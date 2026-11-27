@@ -23,8 +23,8 @@ public class IntakeSubsystem extends SubsystemBase{
 
 //        flower= hardwareMap.get(ServoEx.class, "FLOWER");
         intakeLeft= new ServoEx(hardwareMap, "INTLEFT");
-        intakeRight= new ServoEx(hardwareMap, "INTRIGHT");
-        intakeRight.setInverted(true);
+//        intakeRight= new ServoEx(hardwareMap, "INTRIGHT");
+//        intakeRight.setInverted(true);
     }
 
     public void take(){
@@ -35,6 +35,10 @@ public class IntakeSubsystem extends SubsystemBase{
     public void stopIntake(){
         mIntake.set(0);
         mIntake2.set(0);
+    }
+
+    public void setIntakePos(double pos){
+        intakeLeft.set(pos);
     }
 
 //    public void setPosForFlower(double pos){

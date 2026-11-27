@@ -4,11 +4,15 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.seattlesolvers.solverslib.command.CommandOpMode;
 import com.seattlesolvers.solverslib.command.InstantCommand;
+import com.seattlesolvers.solverslib.command.ParallelCommandGroup;
+import com.seattlesolvers.solverslib.command.SequentialCommandGroup;
+import com.seattlesolvers.solverslib.command.WaitCommand;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 
 import org.firstinspires.ftc.teamcode.Commands.FieldCentric;
 import org.firstinspires.ftc.teamcode.Commands.RobotCentric;
+import org.firstinspires.ftc.teamcode.Subsystems.Constante;
 import org.firstinspires.ftc.teamcode.Subsystems.DriveSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.LimelightSubsystem;
@@ -31,7 +35,9 @@ public class TeleOp extends CommandOpMode{
     TurretSubsystem turret;
     //----------------------------------------------------------------------------------------------
 
-    boolean start= false;
+    boolean start= false, shooting=false;
+
+    double angle;
 
     @Override
     public void initialize(){
@@ -59,12 +65,34 @@ public class TeleOp extends CommandOpMode{
 
         //-------------------------------------------controls---------------------------------------
         gmp1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
-                .whenPressed(new InstantCommand(()-> stoppers.ALLOW()))
-                .whenReleased(new InstantCommand(()-> stoppers.STOP()));
+                .whenPressed(new ParallelCommandGroup(
+                        new InstantCommand(()-> stoppers.ALLOW()),
+                        new InstantCommand(()-> shooting= true)
+                ))
+                .whenReleased(new ParallelCommandGroup(
+                        new InstantCommand(()-> stoppers.STOP()),
+                        new InstantCommand(()-> shooting= false)
+                ));
 
         gmp1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
-                .whenPressed(new InstantCommand(()-> intake.take()))
-                .whenReleased(new InstantCommand(()-> intake.stopIntake()));
+                .whenPressed(new ParallelCommandGroup(
+                        new InstantCommand(()-> intake.take()),
+                        new InstantCommand(()-> intake.setIntakePos(angle))
+                ))
+                .whenReleased(new ParallelCommandGroup(
+                        new InstantCommand(()-> intake.stopIntake()),
+                        new InstantCommand(()-> intake.setIntakePos(Constante.PUSH))
+                ));
+
+        gmp1.getGamepadButton(GamepadKeys.Button.PS).whenPressed(
+                new SequentialCommandGroup(
+                        new InstantCommand(() -> driveSubsystem.resetPinpoint()),
+                        new WaitCommand(100),
+                        new InstantCommand(() -> driveSubsystem.pinpoint.resetPosAndIMU())
+                )
+        );
+
+        driveSubsystem.pinpoint.resetPosAndIMU();
 
         telemetry.addData("Status", "INITIALIZED");
         telemetry.update();
@@ -76,11 +104,21 @@ public class TeleOp extends CommandOpMode{
 
         if(!start) {
             start = true;
-            schedule(new InstantCommand(() -> stoppers.STOP()));
+            schedule(new ParallelCommandGroup(
+                    new InstantCommand(()-> intake.setIntakePos(Constante.PUSH)),
+                    new InstantCommand(()-> stoppers.STOP()
+                    )
+            ));
         }
 
-        schedule(
-                new InstantCommand(()-> turret.startPolenMotor())
-        );
+        if(shooting){
+            angle= Constante.PUSH;
+        } else{
+            angle= Constante.TAKE;
+        }
+
+//        schedule(
+//                new InstantCommand(()-> turret.startPolenMotor())
+//        );
     }
 }

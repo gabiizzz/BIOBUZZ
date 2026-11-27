@@ -17,18 +17,13 @@ public class StopperSubsystem extends SubsystemBase{
         stpNectar.setInverted(true);
     }
 
-//    public void setStopperPos(double pos){
-//        stpPolen.set(pos);
-//        stpNectar.set(pos);
-//    }
-
     public void STOP(){
         stpPolen.set(Constante.polenSTOP);
-        stpNectar.set(Constante.nectarSTOP);
+//        stpNectar.set(Constante.nectarSTOP);
     }
 
     public void ALLOW(){
         stpPolen.set(Constante.polenALLOW);
-        stpNectar.set(Constante.nectarALLOW);
+//        stpNectar.set(Constante.nectarALLOW);
     }
 }
