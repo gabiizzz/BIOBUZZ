@@ -8,5 +8,5 @@ public class Constante{
                         ,nectarALLOW= 0.09;
 
     public static double TAKE=0
-                        ,PUSH=0.25;
+                        ,PUSH=0.58;
 }

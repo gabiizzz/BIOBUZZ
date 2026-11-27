@@ -11,7 +11,8 @@ public class intakeTest extends OpMode{
 
     IntakeSubsystem intake;
 
-    double pos=0, pos2=0;
+    double pos=0;
+    //double pos2=0;
 
     @Override
     public void init() {
@@ -29,16 +30,16 @@ public class intakeTest extends OpMode{
         if(gamepad1.dpadUpWasReleased()) pos+=0.05;
         if(gamepad1.dpadDownWasReleased()) pos-=0.05;
 
-        if(gamepad1.dpadRightWasReleased()) pos2+=0.05;
-        if(gamepad1.dpadLeftWasReleased()) pos2-=0.05;
+        //if(gamepad1.dpadRightWasReleased()) pos2+=0.05;
+        //if(gamepad1.dpadLeftWasReleased()) pos2-=0.05;
 
         intake.intakeLeft.set(pos);
-        intake.intakeRight.set(pos2);
+        //intake.intakeRight.set(pos2);
 
         telemetry.addData("pos", pos);
-        telemetry.addData("pos2", pos2);
+        //telemetry.addData("pos2", pos2);
         telemetry.addData("Left servoPos", intake.intakeLeft.get());
-        telemetry.addData("Right servoPos", intake.intakeRight.get());
+        //telemetry.addData("Right servoPos", intake.intakeRight.get());
         telemetry.update();
     }
 }

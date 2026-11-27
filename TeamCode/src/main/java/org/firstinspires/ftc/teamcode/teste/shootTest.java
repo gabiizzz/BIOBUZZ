@@ -28,12 +28,12 @@ public class shootTest extends OpMode{
         }
         else if(gamepad1.square) {
             intake.mIntake2.set(1);
-            tureta.mNectar.setVelocity(3000);
+            //tureta.mNectar.setVelocity(3000);
         }
         else if(gamepad1.triangle){
             intake.mIntake2.set(0);
             tureta.mPolen.setVelocity(0);
-            tureta.mNectar.setVelocity(0);
+            //tureta.mNectar.setVelocity(0);
         }
     }
 }

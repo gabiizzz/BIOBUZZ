@@ -8,7 +8,7 @@ import com.seattlesolvers.solverslib.hardware.servos.ServoEx;
 public class IntakeSubsystem extends SubsystemBase{
 
     public Motor mIntake, mIntake2;
-    public ServoEx flower, intakeLeft, intakeRight;
+    public ServoEx intakeLeft, intakeRight;
 
     public IntakeSubsystem(HardwareMap hardwareMap){
         super();

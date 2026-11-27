@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.TeleOp;
 
+import static android.os.Build.VERSION_CODES.P;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.seattlesolvers.solverslib.command.CommandOpMode;
@@ -18,6 +20,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.LimelightSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.StopperSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.TurretSubsystem;
+import org.firstinspires.ftc.teamcode.Subsystems.FlowerSubsystem;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp
 public class TeleOp extends CommandOpMode{
@@ -33,6 +36,7 @@ public class TeleOp extends CommandOpMode{
     StopperSubsystem stoppers;
     LimelightSubsystem limelightServo;
     TurretSubsystem turret;
+    FlowerSubsystem flower;
     //----------------------------------------------------------------------------------------------
 
     boolean start= false, shooting=false;
@@ -42,7 +46,11 @@ public class TeleOp extends CommandOpMode{
     @Override
     public void initialize(){
 
+        flower = new FlowerSubsystem(hardwareMap);
+        flower.initPosition();
         driveSubsystem= new DriveSubsystem(hardwareMap);
+        turret = new TurretSubsystem(hardwareMap);
+        PIDFCoefficients pidfCoefficients = new PIDFCoefficients(P, 0, 0, 0);
         gmp1= new GamepadEx(gamepad1);
         robotCentric= new RobotCentric(
                 driveSubsystem,
@@ -50,6 +58,7 @@ public class TeleOp extends CommandOpMode{
                 gmp1::getLeftY,
                 gmp1::getRightX
         );
+
 //        /*fieldCentric= new FieldCentric(
 //                driveSubsystem,
 //                gmp1::getLeftX,
@@ -61,7 +70,8 @@ public class TeleOp extends CommandOpMode{
         intake= new IntakeSubsystem(hardwareMap);
         stoppers= new StopperSubsystem(hardwareMap);
 //        limelightServo= new LimelightSubsystem(hardwareMap);
-        turret= new TurretSubsystem(hardwareMap);
+
+
 
         //-------------------------------------------controls---------------------------------------
         gmp1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
@@ -92,6 +102,12 @@ public class TeleOp extends CommandOpMode{
                 )
         );
 
+        gmp1.getGamepadButton(GamepadKeys.Button.CIRCLE)
+                .toggleWhenPressed(
+                        new InstantCommand(() -> flower.openFlower()),
+                        new InstantCommand(() -> flower.closeFlower())
+                );
+
         driveSubsystem.pinpoint.resetPosAndIMU();
 
         telemetry.addData("Status", "INITIALIZED");
@@ -101,14 +117,14 @@ public class TeleOp extends CommandOpMode{
     @Override
     public void run(){
         super.run();
-
         if(!start) {
             start = true;
             schedule(new ParallelCommandGroup(
-                    new InstantCommand(()-> intake.setIntakePos(Constante.PUSH)),
-                    new InstantCommand(()-> stoppers.STOP()
-                    )
+                    new InstantCommand(() -> intake.setIntakePos(Constante.PUSH)),
+                    new InstantCommand(() -> stoppers.STOP()),
+                    new InstantCommand(() -> turret.startPolenMotor())
             ));
+
         }
 
         if(shooting){
@@ -120,5 +136,9 @@ public class TeleOp extends CommandOpMode{
 //        schedule(
 //                new InstantCommand(()-> turret.startPolenMotor())
 //        );
+        telemetry.addData("Target Velocity", 4000);
+        telemetry.addData("Current Velocity", turret.getPolenVelocity());
+        telemetry.addData("Velocity Error", turret.getVelocityError());
+        telemetry.update();
     }
 }
